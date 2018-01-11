@@ -146,4 +146,29 @@ public class ChangeNotificationsTest {
 			changes.stop();
 		}
 	}
+	
+	@Test
+	public void changes_seqInterval() {
+		dbClient.save(new Foo()); 
+
+		ChangesResult changes = dbClient.changes()
+				.includeDocs(true)
+				.limit(1)
+				.seqInterval(1)
+				.getChanges();
+		
+		List<ChangesResult.Row> rows = changes.getResults();
+		
+		for (Row row : rows) {
+			List<ChangesResult.Row.Rev> revs = row.getChanges();
+			String docId = row.getId();
+			JsonObject doc = row.getDoc();
+			
+			assertNotNull(revs);
+			assertNotNull(docId);
+			assertNotNull(doc);
+		}
+		
+		assertThat(rows.size(), is(1));
+	}
 }

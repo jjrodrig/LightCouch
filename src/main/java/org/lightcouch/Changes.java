@@ -192,6 +192,11 @@ public class Changes {
 		return this;
 	}
 	
+	public Changes seqInterval(int interval) {
+		uriBuilder.query("seq_interval", interval);
+		return this;
+	}
+	
 	// Helper
 
 	/**
