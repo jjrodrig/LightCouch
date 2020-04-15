@@ -37,7 +37,8 @@ import java.util.UUID;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-import org.apache.http.HttpResponse;
+import org.apache.hc.core5.http.ClassicHttpResponse;
+import org.apache.hc.core5.http.HttpResponse;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -185,7 +186,7 @@ final class CouchDbUtil {
 	/**
 	 * @return {@link InputStream} of {@link HttpResponse}
 	 */
-	public static InputStream getStream(HttpResponse response) {
+	public static InputStream getStream(ClassicHttpResponse response) {
 		try { 
 			return response.getEntity().getContent();
 		} catch (Exception e) {
@@ -211,7 +212,7 @@ final class CouchDbUtil {
 	 * 
 	 * @param response The {@link HttpResponse}
 	 */
-	public static void close(HttpResponse response) {
+	public static void close(ClassicHttpResponse response) {
 		try {
 			close(response.getEntity().getContent());
 		} catch (Exception e) {}

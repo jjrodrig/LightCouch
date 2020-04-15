@@ -30,8 +30,8 @@ import java.util.List;
 import org.apache.commons.codec.Charsets;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpPut;
+import org.apache.hc.client5.http.classic.methods.HttpPut;
+import org.apache.hc.core5.http.ClassicHttpResponse;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -87,7 +87,7 @@ public class CouchDbContext {
 	public void createDB(String dbName, int shards) {
 		assertNotEmpty(dbName, "dbName");
 		InputStream getresp = null;
-		HttpResponse putresp = null;
+		ClassicHttpResponse putresp = null;
 		URIBuilder builder = buildUri(dbc.getBaseUri()).path(dbName);
 		if(shards > 0) {
 			builder = builder.query("q", shards);
@@ -146,7 +146,7 @@ public class CouchDbContext {
 	 * Triggers a database <i>compact</i> request.
 	 */
 	public void compact() {
-		HttpResponse response = null;
+		ClassicHttpResponse response = null;
 		try {
 			response = dbc.post(buildUri(dbc.getDBUri()).path("_compact").build(), "");
 		} finally {
@@ -158,7 +158,7 @@ public class CouchDbContext {
 	 * Requests the database commits any recent changes to disk.
 	 */
 	public void ensureFullCommit() {
-		HttpResponse response = null;
+		ClassicHttpResponse response = null;
 		try {
 			response = dbc.post(buildUri(dbc.getDBUri()).path("_ensure_full_commit").build(), "");
 		} finally {
