@@ -24,7 +24,7 @@ import static org.lightcouch.URIBuilder.buildUri;
 import java.net.URI;
 import java.util.List;
 
-import org.apache.http.HttpResponse;
+import org.apache.hc.core5.http.ClassicHttpResponse;
 
 import com.google.gson.JsonObject;
 
@@ -90,7 +90,7 @@ public class Local {
      */
     public boolean contains(String id) {
         assertNotEmpty(id, "id");
-        HttpResponse response = null;
+        ClassicHttpResponse response = null;
         try {
             final URI uri = buildURIforLocal(id);
             response = dbc.head(uri);

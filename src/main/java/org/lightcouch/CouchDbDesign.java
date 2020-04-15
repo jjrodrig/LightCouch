@@ -32,7 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.http.HttpResponse;
+import org.apache.hc.core5.http.ClassicHttpResponse;
 import org.lightcouch.DesignDocument.MapReduce;
 
 import com.google.gson.JsonArray;
@@ -151,7 +151,7 @@ public class CouchDbDesign {
     public boolean contains(String id) { 
         assertNotEmpty(id, "id");
         assertTrue(id.startsWith(DESIGN_PREFIX),"Desing document id should start with "+DESIGN_PREFIX);
-        HttpResponse response = null;
+        ClassicHttpResponse response = null;
         try {
             response = dbc.head(buildUri(dbc.getDBUri()).path(id).build());
         } catch (NoDocumentException e) {

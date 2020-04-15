@@ -28,7 +28,7 @@ import java.util.Map;
 import org.apache.commons.codec.Charsets;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.http.HttpResponse;
+import org.apache.hc.core5.http.ClassicHttpResponse;
 import org.lightcouch.ReplicationResult.ReplicationHistory;
 
 import com.google.gson.JsonObject;
@@ -94,7 +94,7 @@ public class Replication {
 	public ReplicationResult trigger() {
 		assertNotEmpty(source, "Source");
 		assertNotEmpty(target, "Target");
-		HttpResponse response = null;
+		ClassicHttpResponse response = null;
 		try {
 			JsonObject json = createJson();
 			if(log.isDebugEnabled()) {
