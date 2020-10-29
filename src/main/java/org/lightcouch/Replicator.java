@@ -126,7 +126,7 @@ public class Replicator {
 		try {  
 			final URI uri = buildUri(dbURI).path("_all_docs").query("include_docs", "true").build();
 			final Reader reader = new InputStreamReader(instream = dbc.get(uri), Charsets.UTF_8);
-			final JsonArray jsonArray = new JsonParser().parse(reader)
+			final JsonArray jsonArray = JsonParser.parseReader(reader)
 					.getAsJsonObject().getAsJsonArray("rows");
 			final List<ReplicatorDocument> list = new ArrayList<ReplicatorDocument>();
 			for (JsonElement jsonElem : jsonArray) {

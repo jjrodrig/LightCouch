@@ -11,7 +11,7 @@ import org.lightcouch.CouchDbException;
 import org.lightcouch.PurgeResponse;
 import org.lightcouch.Response;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 public class PurgeTest extends CouchDbTestBase {
 

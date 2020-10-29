@@ -46,7 +46,6 @@ import org.apache.hc.client5.http.classic.methods.HttpPut;
 import org.apache.hc.client5.http.classic.methods.HttpUriRequestBase;
 import org.apache.hc.client5.http.impl.auth.BasicCredentialsProvider;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
-import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 import org.apache.hc.core5.http.ClassicHttpRequest;
 import org.apache.hc.core5.http.ClassicHttpResponse;
 import org.apache.hc.core5.http.ContentType;
@@ -330,7 +329,8 @@ public abstract class CouchDbClientBase {
         try {
             response = post(buildUri(getDBUri()).path("_find").build(), jsonQuery);
             Reader reader = new InputStreamReader(getStream(response), Charsets.UTF_8);
-            JsonArray jsonArray = new JsonParser().parse(reader).getAsJsonObject().getAsJsonArray("docs");
+            
+            JsonArray jsonArray = JsonParser.parseReader(reader).getAsJsonObject().getAsJsonArray("docs");
             List<T> list = new ArrayList<T>();
             for (JsonElement jsonElem : jsonArray) {
                 JsonElement elem = jsonElem.getAsJsonObject();
@@ -711,7 +711,7 @@ public abstract class CouchDbClientBase {
     	ClassicHttpResponse response = null;
         try {
             final HttpPut httpPut = new HttpPut(uri);
-            final InputStreamEntity entity = new InputStreamEntity(instream, -1, ContentType.getByMimeType(contentType));
+            final InputStreamEntity entity = new InputStreamEntity(instream, -1, ContentType.parse(contentType));
             httpPut.setEntity(entity);
             response = executeRequest(httpPut);
             return getResponse(response);

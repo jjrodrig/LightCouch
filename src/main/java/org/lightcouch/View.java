@@ -140,7 +140,7 @@ public class View {
 		InputStream instream = null;
 		try {  
 			Reader reader = new InputStreamReader(instream = queryForStream(), Charsets.UTF_8);
-			JsonArray jsonArray = new JsonParser().parse(reader)
+			JsonArray jsonArray = JsonParser.parseReader(reader)
 					.getAsJsonObject().getAsJsonArray("rows");
 			List<T> list = new ArrayList<T>();
 			for (JsonElement jsonElem : jsonArray) {
@@ -171,7 +171,7 @@ public class View {
 		InputStream instream = null;
 		try {  
 			Reader reader = new InputStreamReader(instream = queryForStream(), Charsets.UTF_8);
-			JsonObject json = new JsonParser().parse(reader).getAsJsonObject(); 
+			JsonObject json = JsonParser.parseReader(reader).getAsJsonObject(); 
 			ViewResult<K, V, T> vr = new ViewResult<K, V, T>();
 			vr.setTotalRows(getAsLong(json, "total_rows")); 
 			vr.setOffset(getAsInt(json, "offset"));
@@ -232,7 +232,7 @@ public class View {
 		InputStream instream = null;
 		try {  
 			Reader reader = new InputStreamReader(instream = queryForStream(), Charsets.UTF_8);
-			JsonArray array = new JsonParser().parse(reader).
+			JsonArray array = JsonParser.parseReader(reader).
 							getAsJsonObject().get("rows").getAsJsonArray();
 			if(array.size() != 1) { 
 				throw new NoDocumentException("Expecting a single result but was: " + array.size());
@@ -264,7 +264,7 @@ public class View {
 		String action;
 		try {
 			// extract fields from the returned HEXed JSON object
-			final JsonObject json = new JsonParser().parse(new String(Base64.decodeBase64(param.getBytes()))).getAsJsonObject();
+			final JsonObject json = JsonParser.parseString(new String(Base64.decodeBase64(param.getBytes()))).getAsJsonObject();
 			if(log.isDebugEnabled()) {
 				log.debug("Paging Param Decoded = " + json);
 			}
