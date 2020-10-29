@@ -1,3 +1,7 @@
+# 0.3.0 (29/10/2020)
+- [MAINTENANCE] Upgrade to Apache HttpClient 5.0
+- [MAINTENANCE] Upgrade dependencies 
+
 # 0.2.6 (18/02/2019)
 - [NEW] Added support for /db/_purge endpoint implemented in CouchDB 2.3.0
 
