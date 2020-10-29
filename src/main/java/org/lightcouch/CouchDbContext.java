@@ -136,7 +136,7 @@ public class CouchDbContext {
 		try {
 			instream = dbc.get(buildUri(dbc.getBaseUri()).build());
 			Reader reader = new InputStreamReader(instream, Charsets.UTF_8);
-			return getAsString(new JsonParser().parse(reader).getAsJsonObject(), "version");
+			return getAsString(JsonParser.parseReader(reader).getAsJsonObject(), "version");
 		} finally {
 			close(instream);
 		}
